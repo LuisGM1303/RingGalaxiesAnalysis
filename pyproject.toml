@@ -18,8 +18,8 @@ dependencies = [
     "scipy (>=1.17.1,<2.0.0)",
     "scikit-image (>=0.26.0,<0.27.0)",
     "pywavelets (>=1.9.0,<2.0.0)",
-    "torch (>=2.12.0,<3.0.0)",
-    "torchvision (>=0.27.0,<0.28.0)",
+    "torch (>=2.5.0,<2.12.0)",
+    "torchvision (>=0.20.0,<0.27.0)",
     "seaborn (>=0.13.2,<0.14.0)",
     "scikit-learn (>=1.8.0,<2.0.0)",
     "tqdm (>=4.67.3,<5.0.0)",
@@ -34,3 +34,8 @@ packages = [
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ipykernel (>=7.2.0,<8.0.0)"
+]
