@@ -15,14 +15,12 @@ CONFIG = {
     # Datos
     # NOTE: IMPORTANTE: 
     # Para astropy vitL16a el tamaño de imagen debe ser (518, 518) para evitar problemas de recorte
-    # NOTE: IMPORTANTE: 
-    # Para astropy vitL16a el tamaño de imagen debe ser (518, 518) para evitar problemas de recorte
-    "image_size": (256, 256),
+    "image_size": (518, 518),  # Cambia a (518, 518) si usas vitL16a
     "num_channels": 3,
     "num_classes": 2,
 
     # Entrenamiento
-    "batch_size": 32,
+    "batch_size": 16,
     "learning_rate": 1e-4,
     "weight_decay": 1e-5,
     "epochs": 10,
