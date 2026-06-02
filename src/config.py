@@ -13,6 +13,10 @@ GLOBAL_SEED = 13
 
 CONFIG = {
     # Datos
+    # NOTE: IMPORTANTE: 
+    # Para astropy vitL16a el tamaño de imagen debe ser (518, 518) para evitar problemas de recorte
+    # NOTE: IMPORTANTE: 
+    # Para astropy vitL16a el tamaño de imagen debe ser (518, 518) para evitar problemas de recorte
     "image_size": (256, 256),
     "num_channels": 3,
     "num_classes": 2,
