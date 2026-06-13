@@ -67,6 +67,25 @@ def _unfreeze_head(module: nn.Module) -> None:
     for p in module.parameters():
         p.requires_grad = True
 
+def _register_gradcam(
+    model: nn.Module,
+    target_layer,
+    reshape_transform=None,
+):
+    model.gradcam_target_layer = target_layer
+    model.gradcam_reshape_transform = reshape_transform
+
+def get_gradcam_config(model):
+
+    if hasattr(model, "gradcam_target_layer"):
+        return (
+            model.gradcam_target_layer,
+            getattr(model, "gradcam_reshape_transform", None),
+        )
+
+    raise RuntimeError(
+        "El modelo no tiene configuración GradCAM registrada"
+    )   
 
 # ===========================================================================
 # BLOQUE A — Modelos preentrenados directamente en imágenes de galaxias
@@ -135,7 +154,11 @@ def build_zoobot_convnext(
 
     model = _ZoobotWrapper(encoder, encoder_dim, num_classes,
                            head_hidden, head_dropout)
-
+    _register_gradcam(
+    model,
+    target_layer=model.encoder.stages[-1].blocks[-1],
+    reshape_transform=None,
+)
     if freeze_backbone:
         _freeze_backbone(model.encoder)
     _unfreeze_head(model.head)
@@ -428,7 +451,13 @@ def build_efficientnet_b5(
             return self.head(self.encoder(x))
 
     model = EfficientNetClassifier()
-
+ 
+    _register_gradcam(
+        model,
+        target_layer=model.encoder.blocks[-1],
+        reshape_transform=None,
+    )
+   
     if freeze_backbone:
         _freeze_backbone(model.encoder)
     _unfreeze_head(model.head)
@@ -469,7 +498,11 @@ def build_resnet50(
 
     weights = ResNet50_Weights.DEFAULT if pretrained else None
     model = resnet50(weights=weights)
-
+    _register_gradcam(
+        model,
+        target_layer=model.layer4[-1],
+        reshape_transform=None,
+    )
     if freeze_backbone:
         _freeze_backbone(model)
 
